@@ -1,7 +1,24 @@
 import React, { Fragment } from "react";
 import "./App.css";
 import Customer from "./components/Customer";
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import { withStyles, Theme, StyleRules } from "@material-ui/core/styles";
 
+const styles = (theme: Theme): StyleRules => ({
+  root: {
+    width: "100%",
+    marginTop: theme.spacing(3),
+    overflowX: "auto",
+  },
+  table: {
+    minWidth: 1080,
+  },
+});
 type CustomerType = string | number; // type지정할떄는 보통 대문자
 type Member = {
   [key: string]: string; // key이름은 아무거나 적어도 상관없다 type만 된다 interface는 X
@@ -70,22 +87,37 @@ const customer: {
   job: "대학생2",
 };
 
-function App() {
+function App(props: any) {
+  const { classes } = props;
   return (
-    <Fragment>
-      {customers.map((customer, idx) => {
-        return (
-          <Customer
-            key={customer.id + "_" + idx}
-            id={customer.id}
-            image={customer.image}
-            name={customer.name}
-            birthday={customer.birthday}
-            gender={customer.gender}
-            job={customer.job}
-          />
-        );
-      })}
+    <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>번호</TableCell>
+            <TableCell>이미지</TableCell>
+            <TableCell>이름</TableCell>
+            <TableCell>생년월일</TableCell>
+            <TableCell>성별</TableCell>
+            <TableCell>직업</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {customers.map((customer, idx) => {
+            return (
+              <Customer
+                key={customer.id + "_" + idx}
+                id={customer.id}
+                image={customer.image}
+                name={customer.name}
+                birthday={customer.birthday}
+                gender={customer.gender}
+                job={customer.job}
+              />
+            );
+          })}
+        </TableBody>
+      </Table>
       {/* <Customer
         id={customers[0].id}
         image={customers[0].image}
@@ -110,8 +142,8 @@ function App() {
         gender={customers[2].gender}
         job={customers[2].job}
       /> */}
-    </Fragment>
+    </Paper>
   );
 }
 
-export default App;
+export default withStyles(styles)(App);
