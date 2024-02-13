@@ -34,7 +34,7 @@ interface CustomerArray {
   birthday: string;
   gender: string;
   job: string;
-  id: string;
+  id: number | string;
   image: string;
 }
 

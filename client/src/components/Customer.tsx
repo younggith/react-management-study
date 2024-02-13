@@ -3,7 +3,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
 interface CustomerProps extends CustomerInfoType {
-  id: string;
+  id: number | string;
   image: string;
   name: string;
 }
