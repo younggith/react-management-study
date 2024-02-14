@@ -1,14 +1,16 @@
 import React from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
+import CustomerDelete from "./CustomerDelete";
 
 interface CustomerProps extends CustomerInfoType {
-  id: number | string;
+  id: number;
   image: string;
   name: string;
+  stateRefresh: () => void;
 }
 interface CustomerProfileType {
-  id: string;
+  id: number;
   image: string;
   name: string;
 }
@@ -29,6 +31,9 @@ const Customer = (props: CustomerProps) => {
       <TableCell>{props.birthday}</TableCell>
       <TableCell>{props.gender}</TableCell>
       <TableCell>{props.job}</TableCell>
+      <TableCell>
+        <CustomerDelete id={props.id} stateRefresh={props.stateRefresh} />
+      </TableCell>
     </TableRow>
   );
 };

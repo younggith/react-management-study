@@ -35,7 +35,7 @@ interface CustomerArray {
   birthday: string;
   gender: string;
   job: string;
-  id: number | string;
+  id: number;
   image: string;
 }
 
@@ -65,7 +65,7 @@ function App(props: any) {
   const stateInit: Customers = {
     customers: [
       {
-        id: "",
+        id: 0,
         image: "",
         name: "",
         birthday: "",
@@ -108,6 +108,7 @@ function App(props: any) {
               <TableCell>생년월일</TableCell>
               <TableCell>성별</TableCell>
               <TableCell>직업</TableCell>
+              <TableCell>설정</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -122,6 +123,7 @@ function App(props: any) {
                       birthday={customer.birthday}
                       gender={customer.gender}
                       job={customer.job}
+                      stateRefresh={stateRefresh}
                     />
                   );
                 })
