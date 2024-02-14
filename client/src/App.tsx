@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import "./App.css";
 import Customer from "./components/Customer";
+import CustomerAdd from "./components/CustomerAdd";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -40,6 +41,7 @@ interface CustomerArray {
 
 interface Customers {
   customers: Array<CustomerArray>;
+  completed?: number;
 }
 
 const customer: {
@@ -71,8 +73,16 @@ function App(props: any) {
         job: "",
       },
     ],
+    completed: 0,
   };
   const [state, setState] = useState(stateInit);
+
+  const stateRefresh = () => {
+    setState(stateInit);
+    callApi()
+      .then((res) => setState({ customers: res }))
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     callApi()
@@ -87,37 +97,38 @@ function App(props: any) {
   };
 
   return (
-    <Paper className={classes.root}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>번호</TableCell>
-            <TableCell>이미지</TableCell>
-            <TableCell>이름</TableCell>
-            <TableCell>생년월일</TableCell>
-            <TableCell>성별</TableCell>
-            <TableCell>직업</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {state.customers
-            ? state.customers.map((customer: CustomerArray, idx: number) => {
-                return (
-                  <Customer
-                    key={customer.id + "_" + idx}
-                    id={customer.id}
-                    image={customer.image}
-                    name={customer.name}
-                    birthday={customer.birthday}
-                    gender={customer.gender}
-                    job={customer.job}
-                  />
-                );
-              })
-            : null}
-        </TableBody>
-      </Table>
-      {/* <Customer
+    <Fragment>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>번호</TableCell>
+              <TableCell>이미지</TableCell>
+              <TableCell>이름</TableCell>
+              <TableCell>생년월일</TableCell>
+              <TableCell>성별</TableCell>
+              <TableCell>직업</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {state.customers
+              ? state.customers.map((customer: CustomerArray, idx: number) => {
+                  return (
+                    <Customer
+                      key={customer.id + "_" + idx}
+                      id={customer.id}
+                      image={customer.image}
+                      name={customer.name}
+                      birthday={customer.birthday}
+                      gender={customer.gender}
+                      job={customer.job}
+                    />
+                  );
+                })
+              : null}
+          </TableBody>
+        </Table>
+        {/* <Customer
         id={customers[0].id}
         image={customers[0].image}
         name={customers[0].name}
@@ -141,7 +152,17 @@ function App(props: any) {
         gender={customers[2].gender}
         job={customers[2].job}
       /> */}
-    </Paper>
+      </Paper>
+      <CustomerAdd
+        file={null}
+        userName=""
+        birthday=""
+        gender=""
+        job=""
+        fileName=""
+        stateRefresh={stateRefresh}
+      />
+    </Fragment>
   );
 }
 
