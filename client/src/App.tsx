@@ -163,6 +163,7 @@ function App(props: any) {
         job=""
         fileName=""
         stateRefresh={stateRefresh}
+        open={false}
       />
     </Fragment>
   );
